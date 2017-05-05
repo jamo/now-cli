@@ -2,7 +2,13 @@
   "language": "node_js",
   "node_js": [
     "6",
+    "7",
     "node"
+  ],
+
+  "script": [
+    "npm run test",
+    "prettier --single-quote --no-semi --write  `find ./lib -name '*.js'` ; git diff-index --quiet HEAD && echo 'ok' || echo 'pretty'; exit 1 "
   ],
   "before_deploy": "npm run pack",
   "deploy": {
