@@ -30,8 +30,7 @@ const argv = minimist(process.argv.slice(2), {
 const subcommand = argv._[0]
 
 const help = () => {
-  console.log(
-    `
+  console.log(`
   ${chalk.bold(`${logo} now teams`)} <add | ls | rm | invite>
 
   ${chalk.dim('Options:')}
@@ -68,8 +67,7 @@ const help = () => {
       ${chalk.cyan(`$ now teams rm <id>`)}
 
       ${chalk.gray('–')} If the id is omitted, you can choose interactively
-  `
-  )
+  `)
 }
 
 // Options
