@@ -23,13 +23,11 @@ module.exports = function({ creditCards, currentTeam, user }) {
   const state = {
     error: undefined,
     cardGroupLabel: `> ${chalk.bold(`Enter your card details for ${chalk.bold((currentTeam && currentTeam.slug) || user.username || user.email)}`)}`,
-
     name: {
       label: rightPad('Full Name', 12),
       placeholder: 'John Appleseed',
       validateValue: data => data.trim().length > 0
     },
-
     cardNumber: {
       label: rightPad('Number', 12),
       mask: 'cc',
@@ -44,7 +42,6 @@ module.exports = function({ creditCards, currentTeam, user }) {
         return ccValidator.isValidCardNumber(data, type)
       }
     },
-
     ccv: {
       label: rightPad('CCV', 12),
       mask: 'ccv',
@@ -54,7 +51,6 @@ module.exports = function({ creditCards, currentTeam, user }) {
         return ccValidator.doesCvvMatchType(data, brand)
       }
     },
-
     expDate: {
       label: rightPad('Exp. Date', 12),
       mask: 'expDate',
@@ -62,9 +58,7 @@ module.exports = function({ creditCards, currentTeam, user }) {
       middleware: expDateMiddleware,
       validateValue: data => !ccValidator.isExpired(...data.split(' / '))
     },
-
     addressGroupLabel: `\n> ${chalk.bold('Enter your billing address')}`,
-
     country: {
       label: rightPad('Country', 12),
       async autoComplete(value) {
@@ -80,23 +74,19 @@ module.exports = function({ creditCards, currentTeam, user }) {
       },
       validateValue: value => countries[value] !== undefined
     },
-
     zipCode: {
       label: rightPad('ZIP', 12),
       validadeKeypress: data => data.trim().length > 0,
       validateValue: data => data.trim().length > 0
     },
-
     state: {
       label: rightPad('State', 12),
       validateValue: data => data.trim().length > 0
     },
-
     city: {
       label: rightPad('City', 12),
       validateValue: data => data.trim().length > 0
     },
-
     address1: {
       label: rightPad('Address', 12),
       validateValue: data => data.trim().length > 0
@@ -137,13 +127,11 @@ module.exports = function({ creditCards, currentTeam, user }) {
             }
             brand = chalk.cyan(`[${brand}]`)
             const masked = chalk.gray('#### '.repeat(3)) + result.split(' ')[3]
-            process.stdout.write(
-              `${chalk.cyan(tick)} ${piece.label}${masked} ${brand}\n`
-            )
+            process.stdout
+              .write(`${chalk.cyan(tick)} ${piece.label}${masked} ${brand}\n`)
           } else if (key === 'ccv') {
-            process.stdout.write(
-              `${chalk.cyan(tick)} ${piece.label}${'*'.repeat(result.length)}\n`
-            )
+            process.stdout
+              .write(`${chalk.cyan(tick)} ${piece.label}${'*'.repeat(result.length)}\n`)
           } else if (key === 'expDate') {
             let text = result.split(' / ')
             text = text[0] + chalk.gray(' / ') + text[1]
@@ -161,13 +149,11 @@ module.exports = function({ creditCards, currentTeam, user }) {
               state.city.initialValue = addressInfo.city
             }
             stopSpinner()
-            process.stdout.write(
-              `${chalk.cyan(tick)} ${piece.label}${result}\n`
-            )
+            process.stdout
+              .write(`${chalk.cyan(tick)} ${piece.label}${result}\n`)
           } else {
-            process.stdout.write(
-              `${chalk.cyan(tick)} ${piece.label}${result}\n`
-            )
+            process.stdout
+              .write(`${chalk.cyan(tick)} ${piece.label}${result}\n`)
           }
         } catch (err) {
           if (err.message === 'USER_ABORT') {
@@ -178,7 +164,8 @@ module.exports = function({ creditCards, currentTeam, user }) {
         }
       }
     }
-    console.log('') // New line
+    console.log('')
+    // New line
     const stopSpinner = wait('Saving card')
 
     try {
@@ -194,9 +181,7 @@ module.exports = function({ creditCards, currentTeam, user }) {
         address1: state.address1.value
       })
       stopSpinner()
-      success(
-        `${state.cardNumber.brand} ending in ${res.last4} was added to ${chalk.bold((currentTeam && currentTeam.slug) || user.username || user.email)}`
-      )
+      success(`${state.cardNumber.brand} ending in ${res.last4} was added to ${chalk.bold((currentTeam && currentTeam.slug) || user.username || user.email)}`)
     } catch (err) {
       stopSpinner()
       const linesToClear = state.error ? 13 : 12

@@ -22,17 +22,11 @@ const { bold } = chalk
 const argv = minimist(process.argv.slice(2), {
   string: ['config', 'token'],
   boolean: ['help', 'debug'],
-  alias: {
-    help: 'h',
-    config: 'c',
-    debug: 'd',
-    token: 't'
-  }
+  alias: { help: 'h', config: 'c', debug: 'd', token: 't' }
 })
 
 const help = () => {
-  console.log(
-    `
+  console.log(`
   ${chalk.bold(`${logo} now upgrade`)} [plan]
 
   ${chalk.dim('Options:')}
@@ -55,8 +49,7 @@ const help = () => {
   ${chalk.gray('–')} Pick a specific plan (premium):
 
       ${chalk.cyan(`$ now upgrade premium`)}
-  `
-  )
+  `)
 }
 
 // Options
@@ -140,26 +133,10 @@ function buildInquirerChoices(current, until) {
   }
 
   return [
-    {
-      name: ossName,
-      value: 'oss',
-      short: `OSS ${bold('FREE')}`
-    },
-    {
-      name: premiumName,
-      value: 'premium',
-      short: `Premium ${bold('$15')}`
-    },
-    {
-      name: proName,
-      value: 'pro',
-      short: `Pro ${bold('$50')}`
-    },
-    {
-      name: advancedName,
-      value: 'advanced',
-      short: `Advanced ${bold('$200')}`
-    }
+    { name: ossName, value: 'oss', short: `OSS ${bold('FREE')}` },
+    { name: premiumName, value: 'premium', short: `Premium ${bold('$15')}` },
+    { name: proName, value: 'pro', short: `Pro ${bold('$50')}` },
+    { name: advancedName, value: 'advanced', short: `Advanced ${bold('$200')}` }
   ]
 }
 
@@ -213,9 +190,7 @@ async function run({ token, config: { currentTeam, user } }) {
     newPlan = await plans.set(planId)
   } catch (err) {
     if (err.code === 'customer_not_found' || err.code === 'source_not_found') {
-      error(
-        `You have no payment methods available. Run ${cmd('now billing add')} to add one`
-      )
+      error(`You have no payment methods available. Run ${cmd('now billing add')} to add one`)
     } else {
       error(`An unknow error occured. Please try again later ${err.message}`)
     }
@@ -224,13 +199,9 @@ async function run({ token, config: { currentTeam, user } }) {
   }
 
   if (currentPlan.until && newPlan.id !== 'oss') {
-    success(
-      `The cancelation has been undone. You're back on the ${chalk.bold(`${newPlan.name} plan`)}`
-    )
+    success(`The cancelation has been undone. You're back on the ${chalk.bold(`${newPlan.name} plan`)}`)
   } else if (newPlan.until) {
-    success(
-      `Your plan will be switched to ${chalk.bold(newPlan.name)} in ${chalk.bold(newPlan.until)}. Your card will not be charged again`
-    )
+    success(`Your plan will be switched to ${chalk.bold(newPlan.name)} in ${chalk.bold(newPlan.until)}. Your card will not be charged again`)
   } else {
     success(`You're now on the ${chalk.bold(`${newPlan.name} plan`)}`)
   }

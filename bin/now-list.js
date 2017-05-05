@@ -19,12 +19,7 @@ const sort = require('../lib/sort-deployments')
 const argv = minimist(process.argv.slice(2), {
   string: ['config', 'token'],
   boolean: ['help', 'debug', 'all'],
-  alias: {
-    help: 'h',
-    config: 'c',
-    debug: 'd',
-    token: 't'
-  }
+  alias: { help: 'h', config: 'c', debug: 'd', token: 't' }
 })
 
 const help = () => {

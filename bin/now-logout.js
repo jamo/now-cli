@@ -13,15 +13,11 @@ const logo = require('../lib/utils/output/logo')
 const argv = minimist(process.argv.slice(2), {
   string: ['config'],
   boolean: ['help'],
-  alias: {
-    help: 'h',
-    config: 'c'
-  }
+  alias: { help: 'h', config: 'c' }
 })
 
 const help = () => {
-  console.log(
-    `
+  console.log(`
   ${chalk.bold(`${logo} now logout`)}
 
   ${chalk.dim('Options:')}
@@ -34,8 +30,7 @@ const help = () => {
   ${chalk.gray('–')} Logout from the CLI:
 
     ${chalk.cyan('$ now logout')}
-`
-  )
+`)
 }
 
 if (argv.help) {
@@ -51,9 +46,7 @@ if (argv.config) {
 }
 
 const requestHeaders = token => ({
-  headers: {
-    Authorization: `bearer ${token}`
-  }
+  headers: { Authorization: `bearer ${token}` }
 })
 
 const getTokenId = async token => {
@@ -74,9 +67,7 @@ const getTokenId = async token => {
 }
 
 const revokeToken = async (token, tokenId) => {
-  const details = {
-    method: 'DELETE'
-  }
+  const details = { method: 'DELETE' }
 
   Object.assign(details, requestHeaders(token))
   const result = await fetch(endpoint + encodeURIComponent(tokenId), details)
@@ -87,9 +78,7 @@ const revokeToken = async (token, tokenId) => {
 }
 
 const logout = async () => {
-  const spinner = ora({
-    text: 'Logging out...'
-  }).start()
+  const spinner = ora({ text: 'Logging out...' }).start()
 
   const config = await cfg.read()
 

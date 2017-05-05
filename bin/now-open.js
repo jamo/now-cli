@@ -16,17 +16,11 @@ const logo = require('../lib/utils/output/logo')
 const argv = minimist(process.argv.slice(2), {
   string: ['config', 'token'],
   boolean: ['help', 'debug'],
-  alias: {
-    help: 'h',
-    config: 'c',
-    debug: 'd',
-    token: 't'
-  }
+  alias: { help: 'h', config: 'c', debug: 'd', token: 't' }
 })
 
 const help = () => {
-  console.log(
-    `
+  console.log(`
   ${chalk.bold(`${logo} now open`)}
 
   ${chalk.dim('Options:')}
@@ -42,8 +36,7 @@ const help = () => {
 
     ${chalk.cyan('$ now open')}
 
-`
-  )
+`)
 }
 
 if (argv.help) {
@@ -114,9 +107,7 @@ async function open({ token, config: { currentTeam, user } }) {
   )
 
   if (typeof currentProjectDeployments === 'undefined') {
-    console.log(
-      `No deployments found for ${chalk.bold(pkg.name)} under ${chalk.bold((currentTeam && currentTeam.slug) || user.username || user.email)}`
-    )
+    console.log(`No deployments found for ${chalk.bold(pkg.name)} under ${chalk.bold((currentTeam && currentTeam.slug) || user.username || user.email)}`)
     process.exit(0)
   }
 
@@ -126,9 +117,7 @@ async function open({ token, config: { currentTeam, user } }) {
   try {
     const url = `https://${latestDeploy.url}`
 
-    console.log(
-      `Opening the latest deployment for ${chalk.bold(pkg.name)}... under ${chalk.bold((currentTeam && currentTeam.slug) || user.username || user.email)}`
-    )
+    console.log(`Opening the latest deployment for ${chalk.bold(pkg.name)}... under ${chalk.bold((currentTeam && currentTeam.slug) || user.username || user.email)}`)
     console.log(`Here's the URL: ${chalk.underline(url)}`)
 
     opn(url)

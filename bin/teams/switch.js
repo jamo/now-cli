@@ -23,9 +23,7 @@ module.exports = async function(teams, args) {
   stopSpinner()
 
   if (accountIsCurrent) {
-    currentTeam = {
-      slug: user.username || user.email
-    }
+    currentTeam = { slug: user.username || user.email }
   }
 
   if (args.length !== 0) {
@@ -53,11 +51,7 @@ module.exports = async function(teams, args) {
       name += ` ${chalk.bold('(current)')}`
     }
 
-    return {
-      name,
-      value: slug,
-      short: slug
-    }
+    return { name, value: slug, short: slug }
   })
 
   const suffix = accountIsCurrent ? ` ${chalk.bold('(current)')}` : ''
@@ -85,11 +79,7 @@ module.exports = async function(teams, args) {
     message = `Switch to:`
   }
 
-  const choice = await listInput({
-    message,
-    choices,
-    separator: false
-  })
+  const choice = await listInput({ message, choices, separator: false })
 
   // Abort
   if (!choice) {

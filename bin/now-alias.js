@@ -22,13 +22,7 @@ const promptBool = require('../lib/utils/input/prompt-bool')
 const argv = minimist(process.argv.slice(2), {
   string: ['config', 'token', 'rules'],
   boolean: ['help', 'debug'],
-  alias: {
-    help: 'h',
-    config: 'c',
-    rules: 'r',
-    debug: 'd',
-    token: 't'
-  }
+  alias: { help: 'h', config: 'c', rules: 'r', debug: 'd', token: 't' }
 })
 
 const subcommand = argv._[0]
@@ -374,9 +368,7 @@ async function confirmDeploymentRemoval(alias, _alias) {
     '> The following alias will be removed permanently\n' +
     `  ${tbl} \nAre you sure?`
 
-  return promptBool(msg, {
-    trailing: '\n'
-  })
+  return promptBool(msg, { trailing: '\n' })
 }
 
 function findAlias(alias, list) {

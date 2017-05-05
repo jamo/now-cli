@@ -22,19 +22,13 @@ const logo = require('../lib/utils/output/logo')
 const argv = minimist(process.argv.slice(2), {
   string: ['config', 'token'],
   boolean: ['help', 'debug'],
-  alias: {
-    help: 'h',
-    config: 'c',
-    debug: 'd',
-    token: 't'
-  }
+  alias: { help: 'h', config: 'c', debug: 'd', token: 't' }
 })
 
 const subcommand = argv._[0]
 
 const help = () => {
-  console.log(
-    `
+  console.log(`
   ${chalk.bold(`${logo} now billing`)} <ls | add | rm | set-default>
 
   ${chalk.dim('Options:')}
@@ -65,8 +59,7 @@ const help = () => {
       ${chalk.cyan(`$ now billing set-default <id>`)}
 
       ${chalk.gray('–')} If the id is omitted, you can choose interactively
-  `
-  )
+  `)
 }
 
 // Options
@@ -127,9 +120,12 @@ function buildInquirerChoices(cards) {
     ].join('\n')
 
     return {
-      name: str, // Will be displayed by Inquirer
-      value: card.id, // Will be used to identify the answer
-      short: card.id // Will be displayed after the users answers
+      name: str,
+      // Will be displayed by Inquirer
+      value: card.id,
+      // Will be used to identify the answer
+      // Will be displayed after the users answers
+      short: card.id
     }
   })
 }
@@ -184,9 +180,7 @@ async function run({ token, config: { currentTeam, user } }) {
         .join('\n\n')
 
       const elapsed = ms(new Date() - start)
-      console.log(
-        `> ${cards.cards.length} card${cards.cards.length === 1 ? '' : 's'} found under ${chalk.bold((currentTeam && currentTeam.slug) || user.username || user.email)} ${chalk.gray(`[${elapsed}]`)}`
-      )
+      console.log(`> ${cards.cards.length} card${cards.cards.length === 1 ? '' : 's'} found under ${chalk.bold((currentTeam && currentTeam.slug) || user.username || user.email)} ${chalk.gray(`[${elapsed}]`)}`)
       if (text) {
         console.log(`\n${text}\n`)
       }
@@ -234,9 +228,7 @@ async function run({ token, config: { currentTeam, user } }) {
       // typed `now billing set-default <some-id>`) is valid
       if (cardId) {
         const label = `Are you sure that you to set this card as the default?`
-        const confirmation = await promptBool(label, {
-          trailing: '\n'
-        })
+        const confirmation = await promptBool(label, { trailing: '\n' })
         if (!confirmation) {
           console.log('Aborted')
           break
@@ -246,9 +238,7 @@ async function run({ token, config: { currentTeam, user } }) {
 
         const card = cards.cards.find(card => card.id === cardId)
         const elapsed = ms(new Date() - start)
-        success(
-          `${card.brand} ending in ${card.last4} is now the default ${chalk.gray(`[${elapsed}]`)}`
-        )
+        success(`${card.brand} ending in ${card.last4} is now the default ${chalk.gray(`[${elapsed}]`)}`)
       } else {
         console.log('No changes made')
       }
@@ -273,9 +263,7 @@ async function run({ token, config: { currentTeam, user } }) {
       }
 
       if (cards.cards.length === 0) {
-        error(
-          `You have no credit cards to choose from to delete under ${chalk.bold((currentTeam && currentTeam.slug) || user.username || user.email)}`
-        )
+        error(`You have no credit cards to choose from to delete under ${chalk.bold((currentTeam && currentTeam.slug) || user.username || user.email)}`)
         return exit(0)
       }
 
@@ -311,7 +299,6 @@ async function run({ token, config: { currentTeam, user } }) {
 
         let text = `${deletedCard.brand} ending in ${deletedCard.last4} was deleted`
         //  ${chalk.gray(`[${elapsed}]`)}
-
         if (cardId === cards.defaultCardId) {
           if (remainingCards.length === 0) {
             // The user deleted the last card in their account

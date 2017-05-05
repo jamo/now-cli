@@ -3,7 +3,6 @@
   "node_js": [
     "node"
   ],
-
   "script": [
     "npm run test",
     "prettier --single-quote --no-semi --write  `find ./lib -name '*.js'` `find ./bin -name '*.js'` ; git diff-index --quiet HEAD && echo 'ok' || echo 'pretty'; exit 1 "
