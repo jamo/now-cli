@@ -5,7 +5,7 @@
   ],
   "script": [
     "npm run test",
-    "prettier --single-quote --no-semi --write  `find ./lib -name '*.js'` `find ./bin -name '*.js'` ; git diff-index --quiet HEAD && echo 'ok' || echo 'pretty'; exit 1 "
+    "./node_modules/.bin/prettier --single-quote --no-semi --write  `find ./lib -name '*.js'` `find ./bin -name '*.js'` ; git diff-index --quiet HEAD && echo 'ok' || echo 'pretty'; exit 1 "
   ],
   "before_deploy": "npm run pack",
   "deploy": {
